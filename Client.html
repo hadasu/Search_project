@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>Search Images</title>
+   <script type="text/javascript">
+    var ws = new WebSocket("ws://localhost:3030");
+    function sendMsg() 
+    {
+     ws.send(document.getElementById("msg").value);
+    }
+    ws.onmessage = function(event) 
+    {
+         // Remove link "to the top of" the page
+        if(document.getElementById("linkToTop"))
+            {
+              document.getElementById("linkToTop").remove();
+            }
+        
+        // Remove all images from the last search
+        var oldImag = document.getElementsByTagName('img');
+        var oldDiv = document.getElementsByTagName('div');
+        var l = oldImag.length;
+        for (var i = 0; i < l; i++) 
+        {
+            oldImag[0].parentNode.removeChild(oldImag[0]);
+            document.getElementById("div" + i).remove();
+        }
+        
+        // Creat new images from URL  
+        arrUrl = JSON.parse(event.data);
+        for(var i = 0; i < arrUrl.length; i++)
+        {
+            url = arrUrl[i];
+            
+            var src = url,
+                img = document.createElement('img');
+                img.align = "bottom";
+                img.src = src;
+                img.style.height = "100%";
+                img.style.width  = "100%";
+            var div = document.createElement('div');
+            div.id = "div" + i;
+            div.style.height = "200px";
+            div.style.width = "200px";
+            div.style.float = "left";
+            div.style.position = "relative";
+             
+            div.appendChild(img);
+            document.body.appendChild(div);     
+        } 
+        
+       
+        // Creat a new link to the top of the page
+        var top = document.createElement('A');
+        var text = document.createTextNode("Back to top of page");
+            top.href = "#top";
+            top.appendChild(text);
+            top.id  = "linkToTop";
+            top.style.float = "right";
+            top.style.width = "100%";
+            document.body.appendChild(top);
+    }
+    ws.onerror = function(event)
+    {
+     document.getElementById("rep").value = "Server err:" + event.data;
+    }
+       
+   </script>     
+ </head>
+ <body>
+     <a id="top" name="top"></a>
+    <div align = "center">
+      <input id="msg" type="text" />
+      <button type="submit" onClick="sendMsg()">Search Image</button>
+    </div>
+ </body>
+</html>
