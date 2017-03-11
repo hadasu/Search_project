@@ -1,0 +1,29 @@
+{
+  "name": "search_project",
+  "version": "1.0.0",
+  "description": "search images",
+  "main": "Server.js",
+  "dependencies": {
+    "flickrapi": "^0.6.0",
+    "ws": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hadasu/Search_project.git"
+  },
+  "keywords": [
+    "npm",
+    "module"
+  ],
+  "author": "Hadas Unger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hadasu/Search_project/issues"
+  },
+  "homepage": "https://github.com/hadasu/Search_project#readme"
+}
